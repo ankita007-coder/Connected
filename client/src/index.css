@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+  font-family: "Montserrat", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  --main-theme-background: #120460;
+  --background-secondary: #004695;
+  --white: #ffffff;
+  --color-1: #1E8EAB;
+  --background-grey: #ccc;
+
+  --border-radius-1: 8px;
+  --border-radius-2: 16px;
+
+  --border: #004695;
+  --brand: "Cedarville Cursive", cursive;
+  --heading-1: 800;
+  --heading-2: 600;
+  --semi-bold: 400;
+  --error:rgb(244, 67, 54);
+  --action: #3366ff;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+}
+
+.flex-box{
+  display: flex;
+}
+
+.outlet{
+  width: 70%;
+  margin: 2rem;
+}
+.outlet.full{
+  width: 100%;
+}
+.aside{
+  width: 30%;
+  margin: 2rem;
+}
