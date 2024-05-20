@@ -11,12 +11,12 @@ const router = Router();
 router.use(userAuthentication)
 router.get('/', displayPost);
 router.post('/add', upload.single('postImage'), createPost); // Using multer middleware here
-router.delete('/delete/:postId', deletePost);
+router.delete('/:postId', deletePost);
 
 router.post('/like/:postId', updateLikes);
 
 router.post('/comment/:postId', validateComment, addComment);
 router.delete('/comment/delete/:postId', removeComment);
-router.patch('/comment/:commentId', editComment);
+router.patch('/comment/:postId', editComment);
 
 export default router;
