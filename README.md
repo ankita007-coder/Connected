@@ -1,5 +1,3 @@
-Sure, I'll adjust the structure and the instructions accordingly.
-
 # Social Networking Web App
 
 ## Overview
