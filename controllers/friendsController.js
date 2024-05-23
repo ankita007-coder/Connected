@@ -10,6 +10,9 @@ export const addFriend = async(req, res) => {
         if(!reqUser){
             throw new NotFoundError('User not found')
         }
+        if (reqUser.friends.pending.includes(user._id)){
+            throw new BadRequestError('Friend request already sent');
+        }
         reqUser.friends.pending.push(user._id);
         await reqUser.save();
 
@@ -20,12 +23,64 @@ export const addFriend = async(req, res) => {
     }
 }
 
-export const fetchFriendRequest = async(req, res) => {}
+export const unsendRequest = async(req,res)=>{
+    try {
+        const user = req.user
+        const reqId = req.body.userId;
+        const reqUser = await User.findById(reqId);
+        if(!reqUser){
+            throw new NotFoundError('User not found')
+        }
+        reqUser.friends.pending.pull(user._id);
+        await reqUser.save();
 
-export const removeFriendRequest = async(req, res) =>{}
+        return res.status(StatusCodes.OK).json({msg:'Request sent successfully',user:reqUser});
+    } catch (error) {
+        
+    }
+}
 
-export const acceptFriendRequest = async(req, res) =>{}
+export const fetchFriendRequest = async(req, res) => {
+    try {
+        const user = await User.findById(req.user._id).populate('friends.pending', 'name email avatar bio');
+        const friendRequests = user.friends.pending;       
+        return res.status(StatusCodes.OK).json({friendRequests});
+    } catch (error) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({msg: error.message});
+    }
+}
 
+export const acceptFriendRequest = async(req, res) =>{
+    try {
+        const currUser = req.user;
+        const reqId = req.body.userId
+
+        const reqUser = await User.findById(reqId)
+        reqUser.friends.accepted.push(currUser._id)
+        await reqUser.save()
+        currUser.friends.accepted.push(reqId)
+        currUser.friends.pending.pull(reqId)
+        await currUser.save()
+        return res.status(StatusCodes.OK).json({msg:'Request sent successfully',user:reqUser});
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+export const removeFriendRequest = async(req, res) =>{
+    try {
+        const currUser = req.user;
+        const reqId = req.body.userId
+        const reqUser = await User.findById(reqId)
+        currUser.friends.pending.pull(reqId)
+        await currUser.save()
+        return res.status(StatusCodes.OK).json({msg:'Request sent successfully',user:reqUser});
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+export const removeFriend = async(req,res)=>{}
 
 export const searchUsers = async (req, res) => {
     const { searchTerm } = req.body;

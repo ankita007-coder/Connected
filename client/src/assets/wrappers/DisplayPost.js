@@ -34,11 +34,6 @@ const Wrapper = styled.div`
             }
             
         }
-        .line{
-            width: 100%;
-            height: 0;
-            border: 1px solid #eee;
-        }
         .post-content{
             margin-top:1rem;
             .post-image{

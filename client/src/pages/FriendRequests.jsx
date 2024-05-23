@@ -12,9 +12,10 @@ const FriendRequests = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResult, setSearchResult] = useState(false);
   const [searchedUsers, setSearchedUsers] = useState([]);
-  const [requestSent, setRequestSent] = useState(false);
+  const [friendRequests, setFriendRequests] = useState([]);
   const {token,user} = useAuth()
 
+  //handle search results
   const handleSubmit = async(e)=>{
     e.preventDefault();
     if (searchTerm===''){
@@ -43,10 +44,35 @@ const FriendRequests = () => {
   const handleSearchChange = (e)=>{
     setSearchTerm(e.target.value)
   }
-
-  const addFriend = async(userId)=>{
+  //send friend request
+  const sendRequest = async(userId)=>{
     try {
-      const response = await customFetch.post('/user/add-friend',{
+      const response = await customFetch.post('/user/send-request',{
+        userId: userId
+      },{
+        headers:{
+          'Authorization':`Bearer ${token}`
+        }
+      })
+      if(response.status===200){
+        
+        const {user} = await response.data
+        console.log(user)
+        const users = searchedUsers.map((res)=>
+          res._id === userId ? { ...res, friends: { ...res.friends, pending: user.friends.pending } } : res
+        )
+        setSearchedUsers(users)
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error(error.message)
+    }
+  }
+
+  //unsend friend request
+  const unsendRequest = async(userId)=>{
+    try {
+      const response = await customFetch.post('/user/unsend-request',{
         userId: userId
       },{
         headers:{
@@ -55,18 +81,87 @@ const FriendRequests = () => {
       })
       if(response.status===200){
         const {user} = await response.data
-        const users = searchResult.map((res)=>
+        const users = searchedUsers.map((res)=>
           res._id === userId ? { ...res, friends: { ...res.friends, pending: user.friends.pending } } : res
         )
-        setSearchResult(users)
+        setSearchedUsers(users)
       }
     } catch (error) {
       console.log(error)
     }
   }
+
+  //show user profile
   const showProfile = (userId)=>{
     
   }
+
+  //show all friend requests
+  const showFriendRequests = async()=>{
+    try {
+      const response = await customFetch.get('/user/get-friend-requests',{
+        headers:{
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      if(response.status===200){
+        const list = await response.data.friendRequests
+        setFriendRequests(list)
+      }
+    } catch (error) {
+      toast.error(error.message)
+    }
+  }
+
+  //accept friend requests
+  const acceptRequest=async(userId)=>{
+    try {
+      const response = await customFetch.post('/user/accept-request',{
+        userId: userId
+      },{
+        headers:{
+          'Authorization':`Bearer ${token}`
+        }
+      })
+      if(response.status===200){
+        const {user} = await response.data
+        const users = searchedUsers.map((res)=>
+          res._id === userId ? { ...res, friends: { ...res.friends, accepted: user.friends.accepted } } : res
+        )
+        setFriendRequests(users)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  //reject friend requests
+  const rejectRequest = async(userId)=>{
+    try {
+      const response = await customFetch.post('/user/reject-request',{
+        userId: userId
+      },{
+        headers:{
+          'Authorization':`Bearer ${token}`
+        }
+      })
+      if(response.status===200){
+        const {user} = await response.data
+        const users = searchedUsers.map((res)=>
+          res._id === userId ? { ...res, friends: { ...res.friends, pending: user.friends.pending } } : res
+        )
+        setFriendRequests(users)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  //remove friend from friends
+  useEffect(()=>{
+    showFriendRequests();
+  },[sendRequest,unsendRequest])
+
   return (
     <>
       <Navigation/>
@@ -93,8 +188,9 @@ const FriendRequests = () => {
                                                 key={user._id} 
                                                 {...user} 
                                                 userId={user._id}
-                                                addFriend={addFriend}
-                                                showProfile={showProfile}/>
+                                                sendRequest={sendRequest}
+                                                showProfile={showProfile}
+                                                unsendRequest={unsendRequest}/>
                         })
                       }
                     </div>
@@ -108,7 +204,26 @@ const FriendRequests = () => {
           }
           <div>
             <h2>Friend Requests</h2>
-            <FriendRequest/>
+            <div className='line' style={{width:'95%'}}></div>
+            <div className='search-results marginTop'>
+                {
+                  friendRequests.length > 0 ?(
+                    friendRequests.map((friendRequest) =>{
+                      return <FriendRequest
+                                              key={friendRequest._id}
+                                              {...friendRequest}
+                                              userId={friendRequest._id}
+                                              showProfile={showProfile}
+                                              acceptRequest={acceptRequest}
+                                              rejectRequest={rejectRequest}
+                                              />
+                    })
+                  ):(
+                    <div><p>No pending requests</p></div>
+                  )
+                }
+            </div>
+            
           </div>
         </div>
         <div className='aside'>

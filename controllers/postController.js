@@ -2,7 +2,7 @@ import cloudinary from 'cloudinary';
 import Post from '../models/Post.js';
 import { StatusCodes } from 'http-status-codes';
 import { UnauthorizedError } from '../errors/customErrors.js';
-
+import {formatPicture} from '../middlewares/multerMiddleware.js'
 export const createPost = async (req, res) => {
   try {
     let postImage = '';

@@ -3,9 +3,12 @@ import { profile, updateProfilePic } from "../controllers/userController.js";
 import { userAuthentication } from "../middlewares/authMiddleware.js";
 import upload from "../middlewares/multerMiddleware.js";
 import { 
+        acceptFriendRequest,
          addFriend, 
          fetchFriendRequest, 
-         searchUsers 
+         removeFriendRequest, 
+         searchUsers, 
+         unsendRequest
         } from "../controllers/friendsController.js";
 
 const router = Router()
@@ -18,6 +21,8 @@ router.post('/profilePic',upload.single('avatar'), updateProfilePic)
 //friend controller routes
 router.post('/search-users',searchUsers);
 router.get('/get-friend-requests',fetchFriendRequest)
-router.post('/add-friend',addFriend);
-
+router.post('/send-request',addFriend);
+router.post('/unsend-request',unsendRequest);
+router.post('/accept-request',acceptFriendRequest);
+router.post('/reject-request',removeFriendRequest);
 export default router

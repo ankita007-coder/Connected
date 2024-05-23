@@ -34,7 +34,7 @@ const Wrapper = styled.div`
         align-items: center;
         margin: 12px;
         border: 1px solid var(--border);
-        padding: 4px;
+        padding: 4px 12px;
         border-radius: var(--border-radius-1);
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         .profile-img{
@@ -92,6 +92,12 @@ const Wrapper = styled.div`
             }
         }
     }
+  }
+  h2{
+    margin: 20px 0px;
+  }
+  .marginTop{
+    margin-top: 20px;
   }
 `
 

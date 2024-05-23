@@ -8,15 +8,14 @@ const SearchedUser = ({
                         name,
                         bio,
                         userId,
-                        addFriend,
+                        sendRequest,
                         friends,
-                        showProfile
+                        showProfile,
+                        unsendRequest
                     }) => {
 
     const {user} = useAuth()
-    const sendRequest = (userId) =>{
-        addFriend(userId)
-    }
+    
     const seeProfile = (userId) =>{
         showProfile(userId)
     }
@@ -31,9 +30,13 @@ const SearchedUser = ({
         <p>{bio}</p>
         <div className='action-buttons'>
         {
-            friends.pending.includes(user._id)?
-            (<button className='button3' onClick={()=>unsendReq(userId)}><IoPersonRemove/> &nbsp; Unsend Request</button>):
-            (<button className='button1' onClick={()=>sendRequest(userId)}><IoPersonAdd/> &nbsp; Add Friend</button>)
+            friends.pending.includes(user._id)&&<button className='button3' onClick={()=>unsendRequest(userId)}><IoPersonRemove/> &nbsp; Unsend Request</button>
+        }
+        {
+            !friends.pending.includes(user._id)&& !friends.accepted.includes(user._id) &&<button className='button1' onClick={()=>sendRequest(userId)}><IoPersonAdd/> &nbsp; Add Friend</button>
+        
+        }    {
+          friends.accepted.includes(user._id) && <button className='button3' onClick={()=>(userId)}><IoPersonRemove/> &nbsp; Remove Friend</button>
         }
             <button className='button2' onClick={()=>seeProfile(userId)}><BiSolidShow/> &nbsp; See Profile</button>
         </div>
