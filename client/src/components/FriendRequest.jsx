@@ -1,14 +1,12 @@
 import React from 'react'
 import { IoPersonAdd,IoPersonRemove } from "react-icons/io5";
 import { BiSolidShow } from "react-icons/bi";
-import { useAuth } from '../utils/AuthContext';
 
 const FriendRequest = ({
                         avatar,
                         name,
                         bio,
                         userId,
-                        friends,
                         showProfile,
                         acceptRequest,
                         rejectRequest

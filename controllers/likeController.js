@@ -5,10 +5,8 @@ import Post from "../models/Post.js"
 export const updateLikes = async(req,res)=>{
     try {
         const id = await req.params.postId
-        console.log(id)
         const post  = await Post.findById(id)
         const userId = req.user._id
-        console.log(userId)
         if(!post){
             throw new NotFoundError('Post not found')
         }
@@ -22,7 +20,6 @@ export const updateLikes = async(req,res)=>{
         await post.save();
         return res.status(StatusCodes.OK).json({msg:'Likes updated successfully',post})
     } catch (error) {
-        console.log(error)
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({msg:'Internal Server Error'})
     }
 }

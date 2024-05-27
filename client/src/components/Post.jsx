@@ -31,7 +31,6 @@ const Post = ({
   }
   const handleCategoryChange = (e) =>{
     setCategory(e.target.value)
-   // console.log(e.target.value)
   }
   return (
     <Wrapper>

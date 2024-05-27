@@ -5,20 +5,14 @@ import { comparePassword, hashedPassword } from '../utils/passwordUtils.js';
 import { createJWT } from '../utils/tokenUtils.js';
 
 export const register = async (req, res) => {
-  try {
-    console.log('Received registration request:', req.body);
-    
+  try {    
     const hashPassword = await hashedPassword(req.body.password);
-    console.log('Hashed password:', hashPassword);
-
     const response = await User.create({ name: req.body.name, 
                                          email: req.body.email, 
                                          password: hashPassword,
                                          gender: req.body.gender,
                                          bio: req.body.bio
                                         });
-    console.log('User created:', response);
-
     const token = createJWT({ email: req.body.email, password: req.body.password });
     const oneDay = 24*60*60
     res.cookie('token', token, {
@@ -37,11 +31,8 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    console.log('Received login request:', req.body);
     
     const user = await User.findOne({ email: req.body.email });
-    console.log('User found:', user);
-
     if (!user) {
       throw new NotFoundError(`User ${req.body.email} not found`);
     }

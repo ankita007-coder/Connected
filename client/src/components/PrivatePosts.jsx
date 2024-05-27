@@ -22,7 +22,6 @@ const PrivatePosts = () => {
       e.preventDefault();
       const formData = new FormData();
       try {
-        console.log(category)
         formData.append('content',content)
         formData.append('authorId',user._id)
         formData.append('postImage',postImage)
@@ -58,7 +57,6 @@ const PrivatePosts = () => {
         }
       })
       if (response.status===200){
-        //console.log(response.data)
         setPosts(response.data.posts)
       }
     } catch (error) {

@@ -21,7 +21,7 @@ export const addComment = async(req,res)=>{
         })
         return res.status(StatusCodes.OK).json({msg:'Comment added successfully',post:populatedPost});
     } catch (error) {
-        console.log(error)
+
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({msg: error.message});
     }
 }
@@ -33,7 +33,6 @@ export const removeComment = async(req,res)=>{
         if(!post){
             throw new NotFoundError('Post not found');
         }
-        console.log(req.body.commId);
         const comment = post.comments.id(req.body.commId);
         if (!comment){
             throw new NotFoundError('Comment not found');
@@ -51,7 +50,7 @@ export const removeComment = async(req,res)=>{
         })
         return res.status(StatusCodes.OK).json({msg:'Comment deleted successfully',post:populatedPost})
     } catch (error) {
-        console.log(error)
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({msg:error.message})
     }
 }
 

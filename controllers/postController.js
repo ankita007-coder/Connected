@@ -30,7 +30,6 @@ export const createPost = async (req, res) => {
       post
     });
   } catch (error) {
-    console.log(error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error.message });
   }
 };
@@ -65,7 +64,6 @@ export const deletePost = async (req, res) => {
       throw new UnauthorizedError('You are not allowed to delete this post');
     }
   } catch (error) {
-    console.log(error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error.message });
   }
 };

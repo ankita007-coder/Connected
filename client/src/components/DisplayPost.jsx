@@ -77,7 +77,6 @@ const DisplayPost = ({
     await deletePostUtil(postId,token)
     handleClose();
     const updatedPosts = posts.filter((p)=>p._id!==postId)
-    console.log(updatedPosts)
     setPosts(updatedPosts)
   }
 

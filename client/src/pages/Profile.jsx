@@ -21,10 +21,9 @@ const Profile = () => {
           'Authorization': `Bearer ${token}`
         }
       })
-      console.log(response)
       setUser(response.data.user)
     } catch (error) {
-      console.log(error)
+      toast.error(error)
     }
   }
 

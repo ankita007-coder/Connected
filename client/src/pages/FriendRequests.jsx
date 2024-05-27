@@ -54,17 +54,14 @@ const FriendRequests = () => {
           'Authorization':`Bearer ${token}`
         }
       })
-      if(response.status===200){
-        
+      if(response.status===200){        
         const {user} = await response.data
-        console.log(user)
         const users = searchedUsers.map((res)=>
           res._id === userId ? { ...res, friends: { ...res.friends, pending: user.friends.pending } } : res
         )
         setSearchedUsers(users)
       }
     } catch (error) {
-      console.log(error)
       toast.error(error.message)
     }
   }
@@ -87,7 +84,7 @@ const FriendRequests = () => {
         setSearchedUsers(users)
       }
     } catch (error) {
-      console.log(error)
+      toast.error(error)
     }
   }
 
@@ -131,7 +128,7 @@ const FriendRequests = () => {
         setFriendRequests(users)
       }
     } catch (error) {
-      console.log(error)
+      toast.error(error)
     }
   }
 
@@ -153,7 +150,7 @@ const FriendRequests = () => {
         setFriendRequests(users)
       }
     } catch (error) {
-      console.log(error)
+      toast.error('Error while removing friend request')
     }
   }
 
