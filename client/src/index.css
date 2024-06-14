@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 :root {
   font-family: "Montserrat", sans-serif;
@@ -8,7 +8,7 @@
   --main-theme-background: #120460;
   --background-secondary: #004695;
   --white: #ffffff;
-  --color-1: #1E8EAB;
+  --color-1: #1e8eab;
   --background-grey: #ccc;
 
   --border-radius-1: 8px;
@@ -19,67 +19,67 @@
   --heading-1: 800;
   --heading-2: 600;
   --semi-bold: 400;
-  --error:rgb(244, 67, 54);
+  --error: rgb(244, 67, 54);
   --action: #3366ff;
 }
 
-body{
+body {
   margin: 0;
   padding: 0;
 }
 
-.flex-box{
+.flex-box {
   display: flex;
 }
 
-.outlet{
+.outlet {
   width: 70%;
   margin: 2rem;
 }
-.outlet.full{
+.outlet.full {
   width: 100%;
 }
-.aside{
+.aside {
   width: 30%;
   margin: 2rem;
 }
 
-.line{
+.line {
   width: 100%;
   height: 0;
   border: 1px solid var(--color-1);
 }
 
-.search-results{
+.search-results {
   width: 100%;
 }
-.search-results .container{
-      width: 90%;
-      background-color: var(--white);
-      display: flex;
-      align-items: center;
-      margin: 12px;
-      border: 1px solid var(--border);
-      padding: 4px 12px;
-      border-radius: var(--border-radius-1);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+.search-results .container {
+  width: 90%;
+  background-color: var(--white);
+  display: flex;
+  align-items: center;
+  margin: 12px;
+  border: 1px solid var(--border);
+  padding: 4px 12px;
+  border-radius: var(--border-radius-1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
-.search-results .container .profile-img{
-          width: 30%;
-          border-radius: var(--border-radius-1);
+.search-results .container .profile-img {
+  width: 30%;
+  border-radius: var(--border-radius-1);
 }
-.search-results .container .profile-img img{
-              width: 100%;
-              border-radius: var(--border-radius-1);
-          }
-.search-results .details{
-          margin: 8px;
-          width: 70%;
+.search-results .container .profile-img img {
+  width: 100%;
+  border-radius: var(--border-radius-1);
 }
-.action-buttons{
+.search-results .details {
+  margin: 8px;
+  width: 70%;
+}
+.action-buttons {
   display: flex;
 }
-.action-buttons button{
+.action-buttons button {
   font-size: 0.75rem;
   padding: 4px 12px;
   display: flex;
@@ -91,35 +91,43 @@ body{
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   transition: ease-in-out 1s;
 }
-.action-buttons button:hover{
-    box-shadow: none;
+.action-buttons button:hover {
+  box-shadow: none;
 }
 
-.button1{
-    background-color: green;
-    border: 2px solid green;
+.button1 {
+  background-color: green;
+  border: 2px solid green;
 }
-.button1:hover{
-        color: green;
-        background: transparent;
-        border: 2px solid green;
+.button1:hover {
+  color: green;
+  background: transparent;
+  border: 2px solid green;
 }
-.button2{
-    background-color:var(--background-secondary);
-    border: 2px solid var(--background-secondary);
+.button2 {
+  background-color: var(--background-secondary);
+  border: 2px solid var(--background-secondary);
 }
-.button2:hover{
-    color: var(--background-secondary);
-    background: transparent;
-    border: 2px solid var(--background-secondary);
+.button2:hover {
+  color: var(--background-secondary);
+  background: transparent;
+  border: 2px solid var(--background-secondary);
 }
-.button3{
-    background-color:var(--error);
-    border: 2px solid var(--error);
+.button3 {
+  background-color: var(--error);
+  border: 2px solid var(--error);
 }
-.button3:hover{
-    color: var(--error);
-    background: transparent;
-    border: 2px solid var(--error);
+.button3:hover {
+  color: var(--error);
+  background: transparent;
+  border: 2px solid var(--error);
 }
-            
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--main-theme-background);
+}

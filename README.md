@@ -1,4 +1,6 @@
-# Social Networking Web App
+Got it! I'll update the `README.md` file to reflect the use of Material UI and React Icons instead of Bootstrap. Additionally, I'll include the friend-related API routes as you requested.
+
+---
 
 ## Overview
 
@@ -17,12 +19,12 @@ This project is a social networking web application built using the MERN stack (
 
 ## Tech Stack
 
-- **Frontend**: React.js
+- **Frontend**: React.js, Material UI, React Icons
 - **Backend**: Node.js, Express.js
 - **Database**: MongoDB
 - **Real-Time Communication**: Socket.io
 - **Authentication**: JSON Web Tokens (JWT)
-- **Styling**: CSS, Bootstrap
+- **Styling**: CSS, Material UI
 
 ## Getting Started
 
@@ -103,7 +105,7 @@ social-networking-app/
 │   ├── src/
 │   │   ├── components/
 │   │   ├── pages/
-│   │   ├── services/
+│   │   ├── utils/
 │   │   ├── App.js
 │   │   └── ...
 │   └── ...
@@ -145,8 +147,13 @@ social-networking-app/
 
 - **Friends**
   - `POST /api/v1/user/add-friend` - Send a friend request
-  - `POST /api/friends/accept` - Accept a friend request
-  - `DELETE /api/friends/remove` - Remove a friend
+  - `POST /api/v1/user/unsend-request` - Unsend a friend request
+  - `POST /api/v1/user/accept-request` - Accept a friend request
+  - `POST /api/v1/user/reject-request` - Reject a friend request
+  - `GET /api/v1/user/get-friends` - Get all friends
+  - `POST /api/v1/user/remove-friend` - Remove a friend
+  - `POST /api/v1/user/search-users` - Search for users
+  - `GET /api/v1/user/get-friend-requests` - Get friend requests
 
 - **Chat**
   - `GET /api/chat/:userId` - Get chat messages with a user
@@ -156,7 +163,6 @@ social-networking-app/
 
 Real-time chat functionality is implemented using Socket.io. The server listens for and broadcasts chat messages to connected clients, ensuring instant messaging capabilities.
 
-
 ### License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
@@ -164,3 +170,5 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ---
 
 Feel free to reach out with any questions or suggestions. Happy coding!
+
+---

@@ -92,7 +92,7 @@ const DisplayPost = ({
   }
 
   const addComment =async(postId)=>{
-    addComments(postId)
+    await addComments(postId)
   }
 
   const removeComment = async (commId,postId) => {

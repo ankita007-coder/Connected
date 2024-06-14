@@ -21,7 +21,7 @@ const Aside = () => {
         setFriends(acceptedFriends)
       }
     } catch (error) {
-      toast.error(error.message);
+      console.log(error)
     }
   }
 

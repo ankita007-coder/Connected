@@ -30,5 +30,4 @@ router.post('/reject-request',removeFriendRequest);
 router.get('/get-friends',getAllFriends);
 router.post('/remove-friend',removeFriend);
 
-
 export default router

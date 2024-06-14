@@ -10,6 +10,7 @@ import errorHandlerMiddleware from './middlewares/errorHandlerMiddleware.js';
 import cloudinary from 'cloudinary';
 import userRouter from './routers/userRouter.js';
 import postRouter from './routers/postRouter.js';
+import groupRouter from './routers/groupRouter.js';
 dotenv.config();
 
 const app = express();
@@ -28,6 +29,7 @@ cloudinary.config({
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/user',userRouter);
 app.use('/api/v1/post',postRouter);
+app.use('/api/v1/group',groupRouter);
 // Error handling middleware
 app.use(errorHandlerMiddleware);
 

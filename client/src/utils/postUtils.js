@@ -37,3 +37,19 @@ export const removeFriend = async(userId,token)=>{
     toast.error(error.message)
    }
 }
+
+
+export const getUser = async(token)=>{
+  try {
+    const response = await customFetch.get(`/user/profile`,{
+      headers: { 
+        'Authorization': `Bearer ${token}`
+    }
+  })
+  //console.log(response)
+  return response
+  } catch (error) {
+    console.log(error)
+    toast.error(error.message) 
+  }
+}
