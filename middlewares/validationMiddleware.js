@@ -8,7 +8,9 @@ const validationMiddleware = (validateValues)=>{
     return [
         validateValues,
         (req,res,next)=>{
+            //console.log(req)
             const errors = validationResult(req)
+            //console.log(errors)
             if (!errors.isEmpty()){
                 const errorMessages = errors.array().map(error => error.msg);
                 throw new BadRequestError(errorMessages);
@@ -44,4 +46,8 @@ export const validateLogin= validationMiddleware([
 
 export const validateComment= validationMiddleware([
     body('content').notEmpty().withMessage('Please enter a comment')
+])
+
+export const validateAddGroup = validationMiddleware([
+    body('name').notEmpty().withMessage('Enter a group name')
 ])

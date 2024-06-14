@@ -6,9 +6,9 @@ import cloudinary from "cloudinary"
 export const createGroup= async(req,res)=>{
     try {
         const user = req.user;
-
-        const groupImage = '';
-        const groupImageId='';
+        console.log(user)
+        let groupImage = '';
+        let groupImageId='';
         if(req.file){
             const file = await formatPicture(req.file);
             const response  = await cloudinary.v2.uploader.upload(file);
@@ -18,14 +18,14 @@ export const createGroup= async(req,res)=>{
         const group = await Groups.create({
             name: req.body.name,
             description: req.body.description,
-            groupImg: groupImg,
+            groupImg: groupImage,
             groupPublicId: groupImageId,
-            members: req.user.userId,
-            admin: req.user.userId
+            members: [user._id],
+            admin: [user._id]
         });
         return res.status(StatusCodes.CREATED).json({msg:'Group created successfully'})
     } catch (error) {
-        console.log(6)
+        console.log(error)
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({msg: error.message})
     }
 }

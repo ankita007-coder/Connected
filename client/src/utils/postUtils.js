@@ -49,7 +49,8 @@ export const getUser = async(token)=>{
   //console.log(response)
   return response
   } catch (error) {
-    console.log(error)
-    toast.error(error.message) 
+    //console.log(error)
+    const msg = await error.response.data.msg;
+    toast.error(msg) 
   }
 }

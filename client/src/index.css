@@ -107,6 +107,7 @@ body {
 .button2 {
   background-color: var(--background-secondary);
   border: 2px solid var(--background-secondary);
+  color: white;
 }
 .button2:hover {
   color: var(--background-secondary);
@@ -130,4 +131,9 @@ h4,
 h5,
 h6 {
   color: var(--main-theme-background);
+}
+
+input, textarea,select{
+  outline: none;
+  border: none;
 }

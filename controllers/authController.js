@@ -19,7 +19,7 @@ export const register = async (req, res) => {
       withCredentials: true,
       httpOnly: true,
       expires: new Date(Date.now()+oneDay),
-      secure: process.env.NODE_ENV === 'production', // Set based on environment
+      secure: process.env.NODE_ENV === 'production'
     });
 
     return res.status(StatusCodes.CREATED).json({ msg: 'User created successfully',token });

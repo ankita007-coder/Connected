@@ -19,11 +19,21 @@ const Wrapper = styled.div`
         color: var(--main-theme-background);
     }
     input,textarea{
-        width: 100%;
+        width: 80%;
         margin: 8px;
         border: none;
         padding: 4px 12px;
         background: transparent;
+    }
+    input,textarea{
+        padding: 4px 12px;
+        border-bottom: 1px solid var(--border);
+    }
+    button{
+        font-size: 1rem;
+    }
+    .MuiButton-icon{
+        margin: 0;
     }
 `
 
