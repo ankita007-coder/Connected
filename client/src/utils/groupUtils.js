@@ -26,3 +26,45 @@ export const addGroup = async(group,token)=>{
         toast.error(msg)
     }
 }
+
+export const fetchAllGroups = async(token)=>{
+    try {
+        const response = await customFetch.get('/group',{
+            headers:{
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        const msg = await error.response.data.msg;
+        toast.error(msg)
+    }
+}
+
+export const joinGroup = async(groupId,token)=>{
+    try {
+        const response = await customFetch.post(`/group/join-group/${groupId}`,{},{
+            headers:{
+                'Authorization':`Bearer ${token}`
+            }
+        })
+        return response
+    } catch (error) {
+        const msg = await error.response.data.msg;
+        toast.error(msg)
+    }
+}
+
+export const exitGroup = async(groupId,token)=>{
+    try {
+        const response = await customFetch.delete(`group/leave-group/${groupId}`,{
+            headers:{
+                'Authorization': 'Bearer ' + token
+            }
+        })
+        return response
+    } catch (error) {
+        const msg = await error.response.data.msg;
+        toast.error(msg)
+    }
+}

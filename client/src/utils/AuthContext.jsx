@@ -20,6 +20,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("token");
     localStorage.removeItem("loggedIn");
     setLoggedIn(false);
+    setUser(null);
     setToken(null);
   };
 
@@ -35,10 +36,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
   useEffect(() => {
-    if (token) {
-      fetchUser();
+    if(token){
+      fetchUser()
     }
-  },[]);
+  },[token]);
   return (
     <AuthContext.Provider value={{ user, loggedIn, token, login, logout }}>
       {children}

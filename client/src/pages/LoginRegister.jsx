@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import Wrapper from "../assets/wrappers/LoginRegister";
 import Button from "@mui/material/Button";
 import customFetch from "../utils/customFetch";
@@ -7,7 +7,7 @@ import { NavHead } from "../components";
 import { useAuth } from "../utils/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-const LoginRegister = ({ onlogin }) => {
+const LoginRegister = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -16,11 +16,12 @@ const LoginRegister = ({ onlogin }) => {
   const [bio, setBio] = useState("");
 
   const { login } = useAuth();
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-
   const handleRegister = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await customFetch.post(
         "/auth/register",
@@ -35,12 +36,13 @@ const LoginRegister = ({ onlogin }) => {
           withCredentials: true,
         }
       );
+      setLoading(true);
       if (response.status === 201) {
-        const msg = await response.data.msg;
-        toast.success(msg);
         const token = response.data.token;
         login(token);
-        navigate("/home");
+        const msg = await response.data.msg;
+        toast.success(msg);
+        setLoading(false);
       }
     } catch (error) {
       const msg = await error.response.data.msg;
@@ -48,11 +50,35 @@ const LoginRegister = ({ onlogin }) => {
     }
   };
 
-  const clickLogin = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    onlogin(email, password);
+    try {
+      const response = await customFetch.post(
+        "/auth/login",
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      setLoading(true);
+      if (response.status === 200) {
+        const { token } = response.data;
+        await login(token);
+        setLoading(false);
+        navigate('/');
+        toast.success(response.data.msg);
+      }
+    } catch (error) {
+      const msg = await error?.response?.data?.msg;
+      toast.error(msg);
+    }
   };
-
+  if (loading) {
+    return <p>Loading...</p>;
+  }
   return (
     <>
       <NavHead />
@@ -190,7 +216,7 @@ const LoginRegister = ({ onlogin }) => {
                 variant="contained"
                 size="medium"
                 className="button-primary"
-                onClick={clickLogin}
+                onClick={handleLogin}
               >
                 Login
               </Button>

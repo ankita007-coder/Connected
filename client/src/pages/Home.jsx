@@ -14,7 +14,7 @@ const Home = () => {
   const [comment, setComment] = useState('');
   const [saved, setSaved] = useState(false);
   const [category, setCategory] = useState('public');
-
+  const [loading,setLoading] = useState(false);
   const createPost = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -47,6 +47,7 @@ const Home = () => {
 
   const displayPost = async () => {
     try {
+      setLoading(true);
       const response = await customFetch.get('/post', {
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -54,6 +55,7 @@ const Home = () => {
         },
       });
       if (response.status === 200) {
+        setLoading(false)
         setPosts(response.data.posts);
       }
     } catch (error) {
@@ -109,9 +111,14 @@ const Home = () => {
 
 
   useEffect(() => {
-    displayPost();
+    if(token){
+      displayPost();
+    }
   }, []);
 
+  if(loading){
+    return <p>Loading.......</p>
+  }
   return (
     <>
       <Navigation />
@@ -145,7 +152,7 @@ const Home = () => {
       </Wrapper>
     </>
   );
-};
+};  
 
 const Wrapper = styled.div`
   padding: 1rem 2rem;

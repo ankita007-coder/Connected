@@ -89,7 +89,7 @@ body {
   border-radius: var(--border-radius-1);
   color: var(--white);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  transition: ease-in-out 1s;
+  transition: ease-in-out 0.5s;
 }
 .action-buttons button:hover {
   box-shadow: none;

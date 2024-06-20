@@ -59,7 +59,6 @@ const DisplayPost = ({
 
   const {user,token} = useAuth()
 
-
   const [anchorEl, setAnchorEl] = useState(null);
   const [openComment, setOpenComment] = useState(null);
 
@@ -135,7 +134,7 @@ const DisplayPost = ({
                 </div>
               </div>
               {
-                post?.authorId?._id===user._id && <div>
+                post?.authorId?._id===user?._id && <div>
                 <Button
                   id="demo-customized-button"
                   aria-controls={open ? 'demo-customized-menu' : undefined}

@@ -18,11 +18,11 @@ const router = Router();
 router.use(userAuthentication);
 router.post("/" ,upload.single("groupImg"),validateAddGroup, createGroup);
 router.get("/", displayGroups);
-router.delete("/", deleteGroup);
-router.post("/join-group", joinGroup);
-router.delete("/leave-group", leaveGroup);
-router.patch("/add-to-group", addToGroup);
-router.delete("/remove-from-group", removeFromGroup);
-router.patch("/make-admin", makeAdmin);
+router.delete("/:groupId", deleteGroup);
+router.post("/join-group/:groupId", joinGroup);
+router.delete("/leave-group/:groupId", leaveGroup);
+router.patch("/add-to-group/:groupId", addToGroup);
+router.delete("/remove-from-group/:groupId", removeFromGroup);
+router.patch("/make-admin/:groupId", makeAdmin);
 
 export default router;

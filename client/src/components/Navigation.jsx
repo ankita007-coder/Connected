@@ -20,7 +20,7 @@ import { toast } from 'react-toastify';
 
 const pages = [
                 {
-                  path:'/home',
+                  path:'/',
                   name:'Home'
                 }, 
                 {
