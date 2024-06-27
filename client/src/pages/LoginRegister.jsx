@@ -3,7 +3,7 @@ import Wrapper from "../assets/wrappers/LoginRegister";
 import Button from "@mui/material/Button";
 import customFetch from "../utils/customFetch";
 import { toast } from "react-toastify";
-import { NavHead } from "../components";
+import { Loading, NavHead } from "../components";
 import { useAuth } from "../utils/AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -77,7 +77,7 @@ const LoginRegister = () => {
     }
   };
   if (loading) {
-    return <p>Loading...</p>;
+    return <Loading/>;
   }
   return (
     <>

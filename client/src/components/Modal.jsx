@@ -41,8 +41,8 @@ const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     padding: 16px;
-    border-top: 8px solid var(--border);
-    border-bottom: 8px solid var(--border);
+    border: 4px solid var(--border);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     .head-row {
       width: 100%;
       display: flex;

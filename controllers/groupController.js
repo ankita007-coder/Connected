@@ -37,6 +37,7 @@ export const createGroup = async (req, res) => {
 export const displayGroups = async (req, res) => {
   try {
     const groups = await Groups.find({})
+      .sort({ createdAt: -1 })
       .populate("admin", "name email avatar")
       .populate("members", "name email avatar");
     return res.status(StatusCodes.OK).json({
@@ -49,6 +50,19 @@ export const displayGroups = async (req, res) => {
       .json({ msg: error.message });
   }
 };
+
+export const displayGroupById = async () => {
+  try {
+    const { groupId } = req.params;
+    const group = await Groups.findById(groupId)
+      .populate("admin", "name email avatar")
+      .populate("members", "name email avatar");
+    return res.status(StatusCodes.OK).json({msg:"success",group});
+  } catch (error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({msg:error.message});
+  }
+};
+
 
 export const deleteGroup = async (req, res) => {
   try {
@@ -98,9 +112,30 @@ export const leaveGroup = async (req, res) => {
     const { groupId } = req.params;
     const user = req.user;
     const group = await Groups.findById(groupId);
-    group.members.pull(user._id);
-    await group.save();
-    return res.status(StatusCodes.OK).json({ msg: "Joined group", group });
+
+    const isAdmin = group.admin.includes(user._id);
+
+    if (isAdmin) {
+      if (group.admin.length > 1) {
+        const oldestMember = group.members[0];
+        group.admin.push(oldestMember);
+        group.members.pull(user._id);
+        await group.save();
+        return res.status(StatusCodes.OK).json({ msg: "Left group", group });
+      } else {
+        await Groups.findByIdAndDelete(groupId);
+        return res
+          .status(StatusCodes.OK)
+          .json({
+            msg: "Group deleted as there are no members left",
+            group: groupId,
+          });
+      }
+    } else {
+      group.members.pull(user._id);
+      await group.save();
+      return res.status(StatusCodes.OK).json({ msg: "Left group", group });
+    }
   } catch (error) {
     console.log(error);
     return res

@@ -6,3 +6,4 @@ export {default as LoginRegister} from './LoginRegister';
 export {default as Page404} from './Page404';
 export {default as FriendRequests} from './FriendRequests';
 export {default as Account} from './Account';
+export {default as SingleGroup} from './SingleGroup';

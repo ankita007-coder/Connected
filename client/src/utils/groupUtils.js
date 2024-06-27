@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import customFetch from "./customFetch"
 
-export const addGroup = async(group,token)=>{
+export const addGroup = async(group)=>{
     //console.log(group)
     const formData = new FormData();
     formData.append('name', group.name);
@@ -13,7 +13,6 @@ export const addGroup = async(group,token)=>{
         const response = await customFetch.post('/group',formData,{
             headers:{
                 'Content-Type':'multipart/form-data',
-                'Authorization': `Bearer ${token}`
             }
         });
         if (response.status===201){
@@ -27,13 +26,9 @@ export const addGroup = async(group,token)=>{
     }
 }
 
-export const fetchAllGroups = async(token)=>{
+export const fetchAllGroups = async()=>{
     try {
-        const response = await customFetch.get('/group',{
-            headers:{
-                'Authorization': `Bearer ${token}`
-            }
-        });
+        const response = await customFetch.get('/group');
         return response;
     } catch (error) {
         const msg = await error.response.data.msg;
@@ -41,13 +36,9 @@ export const fetchAllGroups = async(token)=>{
     }
 }
 
-export const joinGroup = async(groupId,token)=>{
+export const joinGroup = async(groupId)=>{
     try {
-        const response = await customFetch.post(`/group/join-group/${groupId}`,{},{
-            headers:{
-                'Authorization':`Bearer ${token}`
-            }
-        })
+        const response = await customFetch.post(`/group/join-group/${groupId}`,{})
         return response
     } catch (error) {
         const msg = await error.response.data.msg;
@@ -57,11 +48,7 @@ export const joinGroup = async(groupId,token)=>{
 
 export const exitGroup = async(groupId,token)=>{
     try {
-        const response = await customFetch.delete(`group/leave-group/${groupId}`,{
-            headers:{
-                'Authorization': 'Bearer ' + token
-            }
-        })
+        const response = await customFetch.delete(`group/leave-group/${groupId}`)
         return response
     } catch (error) {
         const msg = await error.response.data.msg;

@@ -137,3 +137,17 @@ input, textarea,select{
   outline: none;
   border: none;
 }
+
+.link{
+  font-size: 1rem;
+  padding: 4px 12px;
+  display: flex;
+  margin-right: 8px;
+  align-items: center;
+  border: none;
+  border-radius: var(--border-radius-1);
+  color: var(--white);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: ease-in-out 0.5s;
+  text-decoration: none;
+}

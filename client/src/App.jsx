@@ -9,6 +9,7 @@ import {
   LoginRegister,
   Page404,
   Profile,
+  SingleGroup,
 } from "./pages";
 import customFetch from "./utils/customFetch";
 import { toast } from "react-toastify";
@@ -31,6 +32,7 @@ const App = () => {
       <Route path="/" element={loggedIn? <Home/>:<Navigate to={"/login"}/>}/>
       <Route path="/login" element={<LoginRegister/>} />
       <Route path="/groups" element={loggedIn?<Groups />:<Navigate to={"/login"}/>} />
+      <Route path="/singleGroup/:id" element={loggedIn?<SingleGroup/>:<Navigate to={"/login"}/>} />
       <Route path="/friends-list" element={loggedIn?<FriendsList />:<Navigate to={"/login"}/>} />
       <Route path="/friend-requests" element={loggedIn?<FriendRequests />:<Navigate to={"/login"}/>} />
       <Route path="/profile" element={loggedIn?<Profile />:<Navigate to={"/login"}/>} />

@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Aside, Image, Modal, Navigation } from "../components";
+import { Aside, Image, Loading, Modal, Navigation } from "../components";
 import { useAuth } from "../utils/AuthContext";
 import Wrapper from "../assets/wrappers/Groups";
 import { Button } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { addGroup, fetchAllGroups, joinGroup } from "../utils/groupUtils";
+import { addGroup, exitGroup, fetchAllGroups, joinGroup } from "../utils/groupUtils";
 import { toast } from "react-toastify";
 import dummy from "../assets/images/group dummy.png";
 import { Avatar, AvatarGroup } from "@mui/material";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { MdVisibility } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const Groups = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -23,10 +24,13 @@ const Groups = () => {
     groupImg: null,
   });
 
+  const [groupID,setGroupID] = useState(null);
+  const [seeDetailsOpen,setSeeDetailsOpen] = useState(false);
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
   const [memberStatus, setMemberStatus] = useState({});
 
+  const [groupName, setGroupName] = useState('');
   const onClose = () => {
     setOpenModal(false);
   };
@@ -103,7 +107,7 @@ const Groups = () => {
 
   const handleJoinGroup = async (groupId) => {
     try {
-      const response = await joinGroup(groupId, token);
+      const response = await joinGroup(groupId);
       if (response.status === 200) {
         toast.success(response?.data?.msg);
         const { group } = response.data;
@@ -123,10 +127,40 @@ const Groups = () => {
     }
   };
 
-  const handleLeaveGroup = (groupId) => {
-    // Add the leave group functionality here
+  const handleLeaveGroup = async(groupId) => {
+    try {
+      const response = await exitGroup(groupId);
+      if(response.status === 200) {
+        toast.success(response?.data?.msg);
+        const { group } = response.data;
+        if (group===groupId) {
+          getGroups();
+        } 
+        else{
+          
+          let updatedGroups = groups.map((prevGroup) =>
+            prevGroup._id === groupId
+              ? { ...prevGroup, members: group.members }
+              : prevGroup
+          );
+          setGroups(updatedGroups);
+          setMemberStatus((prevStatus) => ({
+            ...prevStatus,
+            [groupId]: false,
+          }));
+        } 
+      }   
+      
+    } catch (error) {
+      toast.error('error while leaving group');
+    }
   };
 
+  const handleSeeDetails = async(groupId,name)=>{
+    setSeeDetailsOpen(true);
+    setGroupID(groupId);
+    setGroupName(name);
+  }
   useEffect(() => {
     if (openModal) {
       document.body.style.overflow = "hidden";
@@ -140,7 +174,7 @@ const Groups = () => {
   }, []);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <Loading/>;
   }
 
   return (
@@ -245,9 +279,9 @@ const Groups = () => {
                         <GroupAddIcon /> &nbsp; Join Group
                       </button>
                     )}
-                    <button className="button2">
+                    <Link to={`/singleGroup/${_id}`} className="button2 link">
                       <MdVisibility /> &nbsp; See Details
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>

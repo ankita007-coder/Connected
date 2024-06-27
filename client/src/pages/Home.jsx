@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Aside, DisplayPost, Navigation, Post } from '../components';
+import { Aside, DisplayPost, Loading, Navigation, Post } from '../components';
 import { useAuth } from '../utils/AuthContext';
 import customFetch from '../utils/customFetch';
 import { toast } from 'react-toastify';
@@ -117,7 +117,7 @@ const Home = () => {
   }, []);
 
   if(loading){
-    return <p>Loading.......</p>
+    return <Loading/>;
   }
   return (
     <>
