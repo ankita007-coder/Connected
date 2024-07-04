@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { profile, updateProfilePic } from "../controllers/userController.js";
+import { getUserById, profile, updateProfilePic } from "../controllers/userController.js";
 import { userAuthentication } from "../middlewares/authMiddleware.js";
 import upload from "../middlewares/multerMiddleware.js";
 import { 
@@ -19,7 +19,7 @@ router.use(userAuthentication)
 
 router.get('/profile', profile)
 router.post('/profilePic',upload.single('avatar'), updateProfilePic)
-
+router.get('/user-profile/:id', getUserById)
 //friend controller routes
 router.post('/search-users',searchUsers);
 router.get('/get-friend-requests',fetchFriendRequest)

@@ -15,7 +15,9 @@ export const userAuthentication = async (req, res, next) => {
     }
     try {
         const data = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await User.findOne({ email: data.email });
+        let user = await User.findOne({ email: data.email });
+        user = user.toObject();
+        delete user.password;
         if (!user) {
             throw new UnauthenticatedError('User not found');
         }

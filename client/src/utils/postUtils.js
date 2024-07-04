@@ -22,18 +22,11 @@ export const removeFriend = async(userId,token)=>{
    try {
     const response = await customFetch.post(`/user/remove-friend`,{
       userId
-    },{
-      headers:{
-        'Authorization': `Bearer ${token}`
-      }
     })
-    if (response.status===200){
-      toast.success(response?.data?.msg)
-    }
-    else{
-      toast.error(response?.data?.msg)
-    }
+    console.log(response)
+    return response
    } catch (error) {
+    console.log(error)
     toast.error(error.message)
    }
 }

@@ -29,9 +29,6 @@ const Wrapper = styled.div`
         padding: 4px 12px;
         border-bottom: 1px solid var(--border);
     }
-    button{
-        font-size: 1rem;
-    }
     .MuiButton-icon{
         margin: 0;
     }

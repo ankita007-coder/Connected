@@ -29,11 +29,13 @@ const FriendsList = () => {
   }
 
   const deleteFriend = async(userId)=>{
-    await removeFriend(userId,token);
-    const updatedList = acceptedFriends.filter((friend)=>{
-      return friend._id!==userId
-    })
-    setAcceptedFriends(updatedList)
+    const response = await removeFriend(userId,token);
+    if (response.status===200){
+      const updatedList = acceptedFriends.filter((friend)=>{
+        return friend._id!==userId
+      })
+      setAcceptedFriends(updatedList)
+    }
   }
   const redirect = ()=>{
     setTimeout(()=>{
@@ -49,7 +51,10 @@ const FriendsList = () => {
     getFriends()
   },[])
   useEffect(()=>{
-    redirect()
+    if(acceptedFriends.length===0){
+      redirect()
+    }
+    
   },[count])
   return (
     <>

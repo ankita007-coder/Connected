@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Wrapper from '../assets/wrappers/FriendRequests';
-import { Aside, FriendRequest, Navigation, SearchedUser } from '../components';
+import { Aside, FriendRequest, Loading, Navigation, SearchedUser } from '../components';
 import { toast } from 'react-toastify';
 import customFetch from '../utils/customFetch';
 import { useAuth } from '../utils/AuthContext';
@@ -14,7 +14,7 @@ const FriendRequests = () => {
   const [searchedUsers, setSearchedUsers] = useState([]);
   const [friendRequests, setFriendRequests] = useState([]);
   const {token,user} = useAuth()
-
+  const [loading, setLoading] =useState(false);
   //handle search results
   const handleSubmit = async(e)=>{
     e.preventDefault();
@@ -88,22 +88,21 @@ const FriendRequests = () => {
     }
   }
 
-  //show user profile
-  const showProfile = (userId)=>{
-    
-  }
 
   //show all friend requests
   const showFriendRequests = async()=>{
     try {
+     
       const response = await customFetch.get('/user/get-friend-requests',{
         headers:{
           'Authorization': `Bearer ${token}`
         }
       })
       if(response.status===200){
+        setLoading(true)
         const list = await response.data.friendRequests
         setFriendRequests(list)
+        setLoading(false)
       }
     } catch (error) {
       toast.error(error.message)
@@ -120,6 +119,7 @@ const FriendRequests = () => {
           'Authorization':`Bearer ${token}`
         }
       })
+      console.log(response)
       if(response.status===200){
         const {user} = await response.data
         const users = searchedUsers.map((res)=>
@@ -128,6 +128,7 @@ const FriendRequests = () => {
         setFriendRequests(users)
       }
     } catch (error) {
+      console.log(error)
       toast.error(error)
     }
   }
@@ -150,6 +151,7 @@ const FriendRequests = () => {
         setFriendRequests(users)
       }
     } catch (error) {
+      console.log(error)
       toast.error('Error while removing friend request')
     }
   }
@@ -159,6 +161,9 @@ const FriendRequests = () => {
     showFriendRequests();
   },[sendRequest,unsendRequest])
 
+  if(loading){
+    return <Loading/>
+  }
   return (
     <>
       <Navigation/>
@@ -185,8 +190,7 @@ const FriendRequests = () => {
                                                 key={user._id} 
                                                 {...user} 
                                                 userId={user._id}
-                                                sendRequest={sendRequest}
-                                                showProfile={showProfile}
+                                                sendRequest={sendRequest}                               
                                                 unsendRequest={unsendRequest}/>
                         })
                       }
@@ -210,7 +214,7 @@ const FriendRequests = () => {
                                               key={friendRequest._id}
                                               {...friendRequest}
                                               userId={friendRequest._id}
-                                              showProfile={showProfile}
+                                             
                                               acceptRequest={acceptRequest}
                                               rejectRequest={rejectRequest}
                                               />

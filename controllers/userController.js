@@ -34,3 +34,22 @@ export const profile = async(req, res) => {
 }
 
 
+export const getUserById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const user = await User.findById(id);
+        
+        if (!user) {
+            return res.status(StatusCodes.NOT_FOUND).json({ msg: "User not found" });
+        }
+
+        const userObj = user.toObject();
+
+        delete userObj.email;
+        delete userObj.password;
+
+        return res.status(StatusCodes.OK).json({ msg: "User retrieved successfully", user:userObj });
+    } catch (error) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: "An error occurred", error });
+    }
+};

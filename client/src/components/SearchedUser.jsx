@@ -2,6 +2,7 @@ import React from 'react'
 import { IoPersonAdd,IoPersonRemove } from "react-icons/io5";
 import { BiSolidShow } from "react-icons/bi";
 import { useAuth } from '../utils/AuthContext';
+import { Link } from 'react-router-dom';
 
 const SearchedUser = ({
                         avatar,
@@ -10,15 +11,15 @@ const SearchedUser = ({
                         userId,
                         sendRequest,
                         friends,
-                        showProfile,
+                       
                         unsendRequest
                     }) => {
 
     const {user} = useAuth()
     
-    const seeProfile = (userId) =>{
-        showProfile(userId)
-    }
+    // const seeProfile = (userId) =>{
+    //     showProfile(userId)
+    // }
 
   return (
     <div className='container'>
@@ -38,7 +39,10 @@ const SearchedUser = ({
         }    {
           friends.accepted.includes(user._id) && <button className='button3' onClick={()=>(userId)}><IoPersonRemove/> &nbsp; Remove Friend</button>
         }
-            <button className='button2' onClick={()=>seeProfile(userId)}><BiSolidShow/> &nbsp; See Profile</button>
+            {/* <button className='button2' onClick={()=>seeProfile(userId)}> &nbsp; See Profile</button> */}
+            <Link to={`/user-profile/${userId}`} className="button2 link">
+            <BiSolidShow/> &nbsp; See Profile
+                    </Link>
         </div>
       </div>
     </div>

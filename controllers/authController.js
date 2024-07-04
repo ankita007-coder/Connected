@@ -50,10 +50,7 @@ export const login = async (req, res) => {
       expires: new Date(Date.now()+oneDay),
       secure: process.env.NODE_ENV === 'production', 
     });
-
-
-    delete user.password;
-    return res.status(StatusCodes.OK).json({ msg: 'Login successful',token,user});
+    return res.status(StatusCodes.OK).json({ msg: 'Login successful',token});
   } catch (error) {
     console.error('Error during login:', error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error.message });

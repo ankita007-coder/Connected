@@ -1,27 +1,28 @@
 import React, { useEffect, useState } from 'react'
-import {Aside, Loading, Navigation, PrivatePosts} from '../components'
+import {Aside, Loading, Navigation} from '../components'
 import Wrapper from '../assets/wrappers/Profile'
 import dummy from "../assets/images/dummy.jpg"
 import bg from "../assets/images/bg.jpg"
 import { useAuth } from '../utils/AuthContext'
 import customFetch from '../utils/customFetch'
-import CameraIcon from '@mui/icons-material/Camera';
 import { toast } from 'react-toastify'
+import { useParams } from 'react-router-dom'
 
 
-const Profile = () => {
+const UserProfile = () => {
 
   const {token} = useAuth();
   const [user,setUser]= useState()
-  const [display,setDisplay] = useState(false)
-  const [loading,setLoading] = useState(true)
+  const {id} = useParams()
+  const [loading,setLoading] = useState(true);
   const fetchProfile = async()=>{
     try {
-      const response = await customFetch.get('/user/profile',{
+      const response = await customFetch.get(`/user/user-profile/${id}`,{
         headers: {
           'Authorization': `Bearer ${token}`
         }
       })
+      console.log(response.data)
       setUser(response.data.user)
       setLoading(false)
     } catch (error) {
@@ -30,36 +31,12 @@ const Profile = () => {
   }
 
   useEffect(()=>{
-    if(token){
-      fetchProfile()
-    }
+    fetchProfile()
   },[])
 
   if(loading){
     return <Loading/>
   }
-
-  const handleProfilePic = async(e) => {
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append('avatar',file);
-    try {
-
-      const response = await customFetch.post('/user/profilePic',formData,{
-        headers:{
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-      if (response.status=== 200) {
-        toast.success('Profile picture uploaded successfully')
-        fetchProfile();
-      }
-    } catch (error) {
-      toast.error(error)
-    }
-  }
-
   return (
     <>
       <Navigation/>
@@ -72,18 +49,7 @@ const Profile = () => {
             </div>
             <div className='profile-img'>  
               
-               {
-                display && <div className='dp' onMouseLeave={()=>setDisplay(false)}>
-                <label htmlFor='dp'><CameraIcon/></label>
-                <input type="file" 
-                        name="avatar" 
-                        id="dp" 
-                        accept='image/*'
-                        style={{display:'none'}}
-                        onChange={handleProfilePic}
-                       />
-                </div> 
-               }    
+                 
                 <img src={user?.avatar||dummy} 
                       alt="" 
                       onMouseEnter={()=>setDisplay(true)}      
@@ -95,7 +61,6 @@ const Profile = () => {
               <p>{user?.bio}</p>
             </div>
           </div>
-          <PrivatePosts/>
         </div>
         <div className='aside'>
           <Aside/>
@@ -105,4 +70,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default UserProfile
