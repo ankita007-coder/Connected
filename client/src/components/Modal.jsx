@@ -33,7 +33,7 @@ const Wrapper = styled.div`
   width: 100%;
   .box {
     background-color: #eee;
-    height: 80%;
+    height: 100%;
     z-index: 100;
     width: 50%;
     border-radius: var(--border-radius-1);
@@ -47,7 +47,7 @@ const Wrapper = styled.div`
       width: 100%;
       display: flex;
       justify-content: space-between;
-      margin: 12px;
+      //margin: 12px;
       h3 {
         text-align: center;
         margin-top: 8px;

@@ -14,6 +14,9 @@ const SingleFriend = ({
 
 }) => {
   const [chatOpen,setChatOpen] =useState(false);
+  const onClose = ()=>{
+    setChatOpen(false);
+  }
   return (
     <div className='container'>
       <div className='profile-img'>
@@ -29,7 +32,7 @@ const SingleFriend = ({
             <button className='button2' onClick={()=>setChatOpen(true)}><MdChatBubble/> Message</button>
         </div>
         {
-          chatOpen && <Chat/>
+          chatOpen && <Chat onClose={onClose} userId={userId}/>
         }
       </div>
     </div>

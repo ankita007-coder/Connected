@@ -11,7 +11,11 @@ const ChatSchema = new mongoose.Schema({
     },
     message:{
         type: String
-    }
+    },
+    roomId: String
 },{
     timestamps:true
 })
+
+
+export default mongoose.model('Chat',ChatSchema)
