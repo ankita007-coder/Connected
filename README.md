@@ -1,7 +1,3 @@
-Got it! I'll update the `README.md` file to reflect the use of Material UI and React Icons instead of Bootstrap. Additionally, I'll include the friend-related API routes as you requested.
-
----
-
 ## Overview
 
 This project is a social networking web application built using the MERN stack (MongoDB, Express.js, React, Node.js). The platform includes features such as posting (both private and public), liking, commenting (with edit and delete options), creating and joining groups, adding friends, searching for users, and real-time chat.
